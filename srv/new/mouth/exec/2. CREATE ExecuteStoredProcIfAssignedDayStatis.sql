@@ -323,7 +323,7 @@ GO
 
 
 
-CREATE OR ALTER PROCEDURE ExecuteStoredProcIfAssignedDay
+CREATE OR ALTER PROCEDURE ExecuteStoredProcIfAssignedDayStatis
 AS
 BEGIN
     DECLARE @DatabaseName VARCHAR(255);
@@ -430,7 +430,7 @@ GO
 
 
 
--- EXEC ExecuteStoredProcIfAssignedDay;
+-- EXEC ExecuteStoredProcIfAssignedDayStatis;
 
 
 

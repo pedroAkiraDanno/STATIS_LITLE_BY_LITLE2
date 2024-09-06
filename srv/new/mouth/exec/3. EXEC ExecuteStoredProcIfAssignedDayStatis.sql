@@ -31,7 +31,7 @@
 
 
 	---- EXECUTE REBUILD and REOGANIZE. 
-	EXEC ExecuteStoredProcIfAssignedDay;
+	EXEC ExecuteStoredProcIfAssignedDayStatis;
 
 
 
