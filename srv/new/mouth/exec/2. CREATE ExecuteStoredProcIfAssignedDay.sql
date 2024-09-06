@@ -229,6 +229,99 @@ GO
 
 
 
+CREATE OR ALTER PROCEDURE  DisableTriggerInDatabase
+    @DatabaseName NVARCHAR(128)
+AS
+BEGIN
+    DECLARE @SQL NVARCHAR(MAX);
+
+    -- Build the dynamic SQL to switch databases and perform operations
+    SET @SQL = '
+        USE ' + QUOTENAME(@DatabaseName) + ';
+
+        PRINT ''Disable a Trigger if it exists in database: ' + @DatabaseName + ', : '';
+
+        -- Check if the trigger exists
+        IF EXISTS (SELECT * FROM sys.triggers WHERE name = ''tr_logdatabase'')
+        BEGIN
+            -- Disable the trigger
+            EXEC(''DISABLE TRIGGER [tr_logdatabase] ON DATABASE;'');
+            PRINT ''Trigger [tr_logdatabase] has been disabled on database ' + @DatabaseName + '. '';
+        END
+        ELSE
+        BEGIN
+            PRINT ''Trigger [tr_logdatabase] does not exist on database ' + @DatabaseName + '. '';
+        END
+    ';
+
+    -- Execute the dynamic SQL
+    EXEC sp_executesql @SQL;
+END
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+CREATE OR ALTER PROCEDURE  EnableTriggerInDatabase
+    @DatabaseName NVARCHAR(128)
+AS
+BEGIN
+    DECLARE @SQL NVARCHAR(MAX);
+
+    -- Build the dynamic SQL to switch databases and perform operations
+    SET @SQL = '
+        USE ' + QUOTENAME(@DatabaseName) + ';
+
+        PRINT ''Enable a Trigger if it exists in database: ' + @DatabaseName + ', : '';
+
+        -- Check if the trigger exists
+        IF EXISTS (SELECT * FROM sys.triggers WHERE name = ''tr_logdatabase'')
+        BEGIN
+            -- Enable the trigger
+            EXEC(''Enable TRIGGER [tr_logdatabase] ON DATABASE;'');
+            PRINT ''Trigger [tr_logdatabase] has been disabled on database ' + @DatabaseName + '. '';
+        END
+        ELSE
+        BEGIN
+            PRINT ''Trigger [tr_logdatabase] does not exist on database ' + @DatabaseName + '. '';
+        END
+    ';
+
+    -- Execute the dynamic SQL
+    EXEC sp_executesql @SQL;
+END
+
+
+
+
+
+
+
+
+
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
 CREATE OR ALTER PROCEDURE ExecuteStoredProcIfAssignedDay
 AS
 BEGIN
@@ -266,59 +359,33 @@ BEGIN
         IF @CurrentDay = @AssignedDay
         BEGIN
 
-
-        -- Use the database context to perform operations
-         EXEC('USE CloudAdm;');
-
-        PRINT 'Disable a Trigger if exist to: ' + @DatabaseName + ', : ';
-
-        -- Disable the trigger if it exists
-        IF EXISTS (SELECT * FROM sys.triggers WHERE name = 'tr_logdatabase')
-        BEGIN
-            EXEC('DISABLE TRIGGER [tr_logdatabase] ON DATABASE;');
-            PRINT 'Trigger [tr_logdatabase] has been disabled on database ' + @DatabaseName + '.';
-        END
-        ELSE
-        BEGIN
-            PRINT 'Trigger [tr_logdatabase] does not exist on database ' + @DatabaseName + '.';
-        END
+                -- DISABLE TRIGGER
+                -- Prepare dynamic SQL to use the database and execute the stored procedure
+                SET @SQL = 'EXEC DisableTriggerInDatabase @dbname = ' + QUOTENAME(@DatabaseName) + ';';
+                -- Print and execute the dynamic SQL
+                PRINT @SQL;
+                EXEC sp_executesql @SQL;
 
 
 
+                EXEC('USE CloudADM;');
+                PRINT 'Current day matches AssignedDay for ' + @DatabaseName + '. Executing stored procedure.';
+                -- Prepare dynamic SQL to use the database and execute the stored procedure
+                SET @SQL = 'EXEC UpdateAllTableStatistics @dbname = ' + QUOTENAME(@DatabaseName) + ';';
 
-
-
-            EXEC('USE CloudAdm;');
-            PRINT 'Current day matches AssignedDay for ' + @DatabaseName + '. Executing stored procedure.';
-            -- Prepare dynamic SQL to use the database and execute the stored procedure
-            SET @SQL = 'EXEC UpdateAllTableStatistics @dbname = ' + QUOTENAME(@DatabaseName) + ';';
-
-            -- Print and execute the dynamic SQL
-            PRINT @SQL;
-            EXEC sp_executesql @SQL;
+                -- Print and execute the dynamic SQL
+                PRINT @SQL;
+                EXEC sp_executesql @SQL;
 
 
 
 
-        -- Use the database context to perform operations
-         EXEC('USE CloudAdm;');
-
-        PRINT 'ENABLE a Trigger if exist to: ' + @DatabaseName + ', : ';
-
-        -- Disable the trigger if it exists
-        IF EXISTS (SELECT * FROM sys.triggers WHERE name = 'tr_logdatabase')
-        BEGIN
-            EXEC('DISABLE TRIGGER [tr_logdatabase] ON DATABASE;');
-            PRINT 'Trigger [tr_logdatabase] has been disabled on database ' + @DatabaseName + '.';
-        END
-        ELSE
-        BEGIN
-            PRINT 'Trigger [tr_logdatabase] does not exist on database ' + @DatabaseName + '.';
-        END
-
-
-
-
+                -- Enable TRIGGER
+                -- Prepare dynamic SQL to use the database and execute the stored procedure
+                SET @SQL = 'EXEC EnableTriggerInDatabase @dbname = ' + QUOTENAME(@DatabaseName) + ';';
+                -- Print and execute the dynamic SQL
+                PRINT @SQL;
+                EXEC sp_executesql @SQL;
 
         END
         ELSE
