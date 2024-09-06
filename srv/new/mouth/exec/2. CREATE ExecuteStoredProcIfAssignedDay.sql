@@ -228,7 +228,6 @@ GO
 
 
 
-
 CREATE OR ALTER PROCEDURE ExecuteStoredProcIfAssignedDay
 AS
 BEGIN
@@ -260,16 +259,30 @@ BEGIN
     WHILE @@FETCH_STATUS = 0
     BEGIN
         PRINT 'Processing Database: ' + @DatabaseName + ', AssignedDay: ' + CAST(@AssignedDay AS VARCHAR(2));
-        
+
+        -- Use the database context to perform operations
+        EXEC('USE ' + QUOTENAME(@DatabaseName) + ';');
+
+        PRINT 'Disable a Trigger if exist to: ' + @DatabaseName + ', : ';
+
+        -- Disable the trigger if it exists
+        IF EXISTS (SELECT * FROM sys.triggers WHERE name = 'tr_logdatabase')
+        BEGIN
+            EXEC('DISABLE TRIGGER [tr_logdatabase] ON DATABASE;');
+            PRINT 'Trigger [tr_logdatabase] has been disabled on database ' + @DatabaseName + '.';
+        END
+        ELSE
+        BEGIN
+            PRINT 'Trigger [tr_logdatabase] does not exist on database ' + @DatabaseName + '.';
+        END
+
         -- Check if today matches the AssignedDay
         IF @CurrentDay = @AssignedDay
         BEGIN
+            EXEC('USE CloudAdm;');
             PRINT 'Current day matches AssignedDay for ' + @DatabaseName + '. Executing stored procedure.';
             -- Prepare dynamic SQL to use the database and execute the stored procedure
-            SET @SQL = '
-                EXEC  UpdateAllTableStatistics @dbname = ' + QUOTENAME(@DatabaseName) + ';
-
-            ';
+            SET @SQL = 'EXEC UpdateAllTableStatistics @dbname = ' + QUOTENAME(@DatabaseName) + ';';
 
             -- Print and execute the dynamic SQL
             PRINT @SQL;
@@ -290,6 +303,8 @@ BEGIN
 
     PRINT 'Cursor processing complete.';
 END;
+
+
 
 
 
