@@ -28,16 +28,11 @@ BEGIN
     -- Display contents of TB_AuxTable_Statis
     --SELECT * FROM TB_AuxTable_Statis;
 
-
     -- add new 02-09-24
      -- add primary key to improve performace
     -- ALTER TABLE TB_AuxTable_Statis
     -- ADD CONSTRAINT PK_DatabaseName PRIMARY KEY (DatabaseName);
    -- PRINT 'add primary key to improve performace.';
-
-
-
-
 
     -- Step 2: Insert databases into TB_AuxTable_Statis if they are not already present
     INSERT INTO TB_AuxTable_Statis (DatabaseName)
@@ -88,17 +83,15 @@ BEGIN
             [AssignedDay] ASC
         )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF);
 
-
-
 END;
 GO
-
 
 
 
 EXEC UpdateAuxTable;
 
 
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 
@@ -134,17 +127,7 @@ EXEC UpdateAuxTable;
 
 
 
-
-
-
-
-
-
-
-
-
-
-
+-- PRINTS 
 	   PRINT 'show the database TB_AuxTable_Statis'
 	   SELECT * FROM TB_AuxTable_Statis ORDER BY AssignedDay; 
 	   DECLARE @CurrentDay INT;
@@ -159,12 +142,16 @@ EXEC UpdateAuxTable;
 
 
 	
-	
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	
 	
 	
         
         
+
+
+
+
 
 CREATE OR ALTER PROCEDURE  [dbo].[UpdateAllTableStatistics]
 		@dbname VARCHAR(255)
@@ -235,7 +222,7 @@ GO
 	
 	
 	
-	
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	
 
 
@@ -339,7 +326,7 @@ END;
 
 
 
-
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 
@@ -482,6 +469,16 @@ END;
         GO
 
 */
+
+
+
+
+
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 
