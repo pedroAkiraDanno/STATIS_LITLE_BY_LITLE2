@@ -265,7 +265,6 @@ BEGIN
         IF @CurrentDay = @AssignedDay
         BEGIN
             PRINT 'Current day matches AssignedDay for ' + @DatabaseName + '. Executing stored procedure.';
-            
             -- Prepare dynamic SQL to use the database and execute the stored procedure
             SET @SQL = '
                 EXEC  UpdateAllTableStatistics @dbname = ' + QUOTENAME(@DatabaseName) + ';
