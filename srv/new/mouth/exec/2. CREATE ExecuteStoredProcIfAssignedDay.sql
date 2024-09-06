@@ -257,7 +257,7 @@ BEGIN
     -- Execute the dynamic SQL
     EXEC sp_executesql @SQL;
 END
-
+GO 
 
 
 
@@ -304,6 +304,7 @@ BEGIN
     -- Execute the dynamic SQL
     EXEC sp_executesql @SQL;
 END
+GO 
 
 
 
@@ -311,8 +312,8 @@ END
 
 
 
-
-
+-- DisableTriggerInDatabase @DatabaseName = 'CloudADM';
+-- EnableTriggerInDatabase @DatabaseName = 'CloudADM';
 
 
 
@@ -361,7 +362,7 @@ BEGIN
 
                 -- DISABLE TRIGGER
                 -- Prepare dynamic SQL to use the database and execute the stored procedure
-                SET @SQL = 'EXEC DisableTriggerInDatabase @dbname = ' + QUOTENAME(@DatabaseName) + ';';
+                SET @SQL = 'EXEC DisableTriggerInDatabase @DatabaseName = ' + QUOTENAME(@DatabaseName) + ';';
                 -- Print and execute the dynamic SQL
                 PRINT @SQL;
                 EXEC sp_executesql @SQL;
@@ -382,7 +383,7 @@ BEGIN
 
                 -- Enable TRIGGER
                 -- Prepare dynamic SQL to use the database and execute the stored procedure
-                SET @SQL = 'EXEC EnableTriggerInDatabase @dbname = ' + QUOTENAME(@DatabaseName) + ';';
+                SET @SQL = 'EXEC EnableTriggerInDatabase @DatabaseName = ' + QUOTENAME(@DatabaseName) + ';';
                 -- Print and execute the dynamic SQL
                 PRINT @SQL;
                 EXEC sp_executesql @SQL;
@@ -404,7 +405,7 @@ BEGIN
 
     PRINT 'Cursor processing complete.';
 END;
-
+GO 
 
 
 
