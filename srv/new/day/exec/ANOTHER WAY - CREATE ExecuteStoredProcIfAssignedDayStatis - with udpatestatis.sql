@@ -3,11 +3,9 @@
 
 
 
-USE CLOUDADM; 
+
+USE CloudAdm; 
 GO 
-
-
-
 
 
 
@@ -27,12 +25,16 @@ BEGIN
     );
     PRINT 'TB_AuxTable created.';
 
+    -- Display contents of TB_AuxTable
+    --SELECT * FROM TB_AuxTable;
+
 
     -- add new 02-09-24
      -- add primary key to improve performace
     -- ALTER TABLE TB_AuxTable
     -- ADD CONSTRAINT PK_DatabaseName PRIMARY KEY (DatabaseName);
    -- PRINT 'add primary key to improve performace.';
+
 
 
 
@@ -55,7 +57,7 @@ BEGIN
 
     PRINT 'Databases inserted into TB_AuxTable.';
 
-    -- Step 3: Update AssignedDay with a value from 1 to 7
+    -- Step 3: Update AssignedDay with the current day of the month
     WITH NumberedDatabases AS (
         SELECT
             DatabaseName,
@@ -63,14 +65,13 @@ BEGIN
         FROM TB_AuxTable
     )
     UPDATE TB_AuxTable
-    SET AssignedDay = ((RowNum - 1) % 7) + 1
+    SET AssignedDay = ((RowNum - 1) % 30) + 1
     FROM NumberedDatabases
     WHERE TB_AuxTable.DatabaseName = NumberedDatabases.DatabaseName;
 
-    PRINT 'AssignedDay updated for each database.';
-    
     -- Display contents of TB_AuxTable
-    SELECT * FROM TB_AuxTable ORDER BY AssignedDay;
+    SELECT * FROM TB_AuxTable ORDER BY 2;
+    PRINT 'AssignedDay updated for each database.';
 
 
 	-- CREATE INDEX 
@@ -91,7 +92,6 @@ BEGIN
 
 END;
 GO
-
 
 
 
@@ -121,39 +121,69 @@ GO
 
 
 
-    	-- Get the current day of the month
-    	 SELECT DATEPART(WEEKDAY, GETDATE()) AS WEEKDAY;
-	 GO
 
 
 
-    	-- Get the current day of the month
-    	 SELECT DATENAME(dw,GETDATE()) AS WEEKNAME;
-	  GO
 
 
-    	 -- Get the current day of the month
-   	   SELECT DATEPART(WEEKDAY, GETDATE()) AS WEEKDAY;
-	   GO
 
-		   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	   PRINT 'show the database TB_AuxTable'
+	   SELECT * FROM TB_AuxTable ORDER BY AssignedDay; 
 	   DECLARE @CurrentDay INT;
+
 	    -- Get the current day of the month
-	    SET @CurrentDay =DATEPART(WEEKDAY, GETDATE());		
+	    SET @CurrentDay = DAY(GETDATE());
+	    PRINT 'Current Day of the Month: ' + CAST(@CurrentDay AS VARCHAR(2));
+		
 	    PRINT 'database of current day'
-	    SELECT * FROM TB_AuxTable WHERE AssignedDay = @CurrentDay ORDER BY AssignedDay; 	
+	    SELECT * FROM TB_AuxTable WHERE AssignedDay = @CurrentDay ORDER BY AssignedDay; 
 	    GO
 
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 
 
 
-
-
-
-
-CREATE OR ALTER PROCEDURE ExecuteStoredProcIfAssignedDay
+CREATE OR ALTER PROCEDURE ExecuteStoredProcIfAssignedDayStatis
 AS
 BEGIN
     DECLARE @DatabaseName VARCHAR(255);
@@ -161,10 +191,10 @@ BEGIN
     DECLARE @CurrentDay INT;
     DECLARE @SQL NVARCHAR(MAX);
 
-    -- Get the current day of the week (1 = Monday, ..., 7 = Sunday)
-    SET @CurrentDay = DATEPART(WEEKDAY, GETDATE());
+    -- Get the current day of the month
+    SET @CurrentDay = DAY(GETDATE());
 
-    PRINT 'Current Day of the Week: ' + CAST(@CurrentDay AS VARCHAR(2));
+    PRINT 'Current Day of the Month: ' + CAST(@CurrentDay AS VARCHAR(2));
 
     -- Refresh the TB_AuxTable
     EXEC UpdateAuxTable;
@@ -193,7 +223,7 @@ BEGIN
             -- Prepare dynamic SQL to use the database and execute the stored procedure
             SET @SQL = '
                 USE ' + QUOTENAME(@DatabaseName) + ';
-                EXEC PROC_ANALISA_REFAZ_TODOS_INDICES;
+                EXEC sp_updatestats;
             ';
 
             -- Print and execute the dynamic SQL
@@ -215,7 +245,23 @@ BEGIN
 
     PRINT 'Cursor processing complete.';
 END;
-GO
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-- EXEC ExecuteStoredProcIfAssignedDayStatis;
 
 
 
@@ -233,7 +279,6 @@ GO
 
 
 
--- EXEC ExecuteStoredProcIfAssignedDay;
 
 
 
@@ -253,6 +298,74 @@ GO
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+-- INDEX
+
+/*
+	USE [CloudADM];
+	GO
+
+	-- Check if the index IDXP_AUXTABLE_DATABASENAME exists
+	IF NOT EXISTS (
+		SELECT 1 
+		FROM sys.indexes 
+		WHERE name = 'IDXP_AUXTABLE_DATABASENAME' 
+		AND object_id = OBJECT_ID('dbo.TB_AuxTable')
+	)
+	BEGIN
+		-- Create the index if it does not exist
+		CREATE NONCLUSTERED INDEX IDXP_AUXTABLE_DATABASENAME 
+		ON [dbo].[TB_AuxTable] ([DatabaseName] ASC)
+		WITH (
+			PAD_INDEX = OFF, 
+			STATISTICS_NORECOMPUTE = OFF, 
+			SORT_IN_TEMPDB = OFF, 
+			DROP_EXISTING = OFF, 
+			ONLINE = OFF, 
+			ALLOW_ROW_LOCKS = ON, 
+			ALLOW_PAGE_LOCKS = ON, 
+			OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF
+		);
+	END
+	GO
+
+	-- Check if the index IDXP_AUXTABLE_ASSIGNEDDAY exists
+	IF NOT EXISTS (
+		SELECT 1 
+		FROM sys.indexes 
+		WHERE name = 'IDXP_AUXTABLE_ASSIGNEDDAY' 
+		AND object_id = OBJECT_ID('dbo.TB_AuxTable')
+	)
+	BEGIN
+		-- Create the index if it does not exist
+		CREATE NONCLUSTERED INDEX IDXP_AUXTABLE_ASSIGNEDDAY 
+		ON [dbo].[TB_AuxTable] ([AssignedDay] ASC)
+		WITH (
+			PAD_INDEX = OFF, 
+			STATISTICS_NORECOMPUTE = OFF, 
+			SORT_IN_TEMPDB = OFF, 
+			DROP_EXISTING = OFF, 
+			ONLINE = OFF, 
+			ALLOW_ROW_LOCKS = ON, 
+			ALLOW_PAGE_LOCKS = ON, 
+			OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF
+		);
+	END
+	GO
+
+*/
 
 
 
@@ -308,7 +421,6 @@ GO
         GO
 
 */
-
 
 
 
