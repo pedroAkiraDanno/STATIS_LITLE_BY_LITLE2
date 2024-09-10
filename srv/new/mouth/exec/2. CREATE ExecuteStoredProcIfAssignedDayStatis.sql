@@ -9,7 +9,7 @@ GO
 
 
 
-CREATE OR ALTER PROCEDURE UpdateAuxTable
+CREATE OR ALTER PROCEDURE UpdateAuxTableStatis
 AS
 BEGIN
     -- Step 1: Drop and recreate the TB_AuxTable_Statis
@@ -47,6 +47,7 @@ BEGIN
       AND UPPER(Name) NOT LIKE '%SKY%'
       AND UPPER(Name) NOT LIKE '%DESENV%'  
       AND UPPER(Name) NOT LIKE '%EQUIPEF4%'
+      AND UPPER(Name) NOT LIKE '%TesteUnitario%'      
       AND UPPER(Name) NOT LIKE '%FALTA_PAGAMENTO%'      
       AND DATABASE_ID > 4;
 
@@ -88,7 +89,7 @@ GO
 
 
 
-EXEC UpdateAuxTable;
+EXEC UpdateAuxTableStatis;
 
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -337,7 +338,7 @@ BEGIN
     PRINT 'Current Day of the Month: ' + CAST(@CurrentDay AS VARCHAR(2));
 
     -- Refresh the TB_AuxTable_Statis
-    EXEC UpdateAuxTable;
+    EXEC UpdateAuxTableStatis;
 
     -- Declare the cursor
     DECLARE db_cursor CURSOR FOR
