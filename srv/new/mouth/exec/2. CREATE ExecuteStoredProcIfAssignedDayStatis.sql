@@ -170,6 +170,7 @@ BEGIN
 
     -- Switch to the specified database
     SET @SQL = 'USE ' + QUOTENAME(@dbname) + ';';
+    PRINT @SQL;
     EXEC sp_executesql @SQL;
 
     -- Declare a cursor for selecting table names from the specified database
