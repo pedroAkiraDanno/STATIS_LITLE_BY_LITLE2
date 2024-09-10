@@ -154,12 +154,10 @@ EXEC UpdateAuxTableStatis;
 
 
 
-CREATE OR ALTER PROCEDURE  [dbo].[UpdateAllTableStatistics]
-		@dbname VARCHAR(255)
+CREATE OR ALTER PROCEDURE [dbo].[UpdateAllTableStatistics]
+    @dbname VARCHAR(255)
 AS
 BEGIN
-
-
     -- Ensure no extra messages interfere with the output
     SET NOCOUNT ON;
 
@@ -168,16 +166,20 @@ BEGIN
     DECLARE @tablename NVARCHAR(128);
     DECLARE @Statement NVARCHAR(300);
 
-    -- Switch to the specified database
-    SET @SQL = 'USE ' + QUOTENAME(@dbname) + ';';
-    PRINT @SQL;
-    EXEC sp_executesql @SQL;
+    -- Build dynamic SQL to switch database context
+    SET @SQL = N'
+    -- Declare variables for dynamic SQL
+    DECLARE @SQL NVARCHAR(MAX);
+    DECLARE @tablename NVARCHAR(128);
+    DECLARE @Statement NVARCHAR(300);
 
+    USE ' + QUOTENAME(@dbname) + ';
+    
     -- Declare a cursor for selecting table names from the specified database
     DECLARE updatestats CURSOR FOR
     SELECT table_name
     FROM information_schema.tables
-    WHERE TABLE_TYPE = 'BASE TABLE';
+    WHERE TABLE_TYPE = ''BASE TABLE'';
 
     -- Open the cursor
     OPEN updatestats;
@@ -189,8 +191,8 @@ BEGIN
     WHILE (@@FETCH_STATUS = 0)
     BEGIN
         -- Construct the UPDATE STATISTICS command
-        PRINT N'UPDATING STATISTICS ' + @tablename;
-        SET @Statement = 'UPDATE STATISTICS ' + QUOTENAME(@tablename) + ' WITH FULLSCAN';
+        PRINT N''UPDATING STATISTICS '' + @tablename;
+        SET @Statement = ''UPDATE STATISTICS '' + QUOTENAME(@tablename) + '' WITH FULLSCAN'';
         PRINT @Statement;
 
         -- Execute the dynamic SQL command
@@ -203,11 +205,25 @@ BEGIN
     -- Close and deallocate the cursor
     CLOSE updatestats;
     DEALLOCATE updatestats;
+    ';
+
+	print @SQL;
+    -- Execute the dynamic SQL
+    EXEC sp_executesql @SQL;
     
     -- Restore NOCOUNT setting
     SET NOCOUNT OFF;
 END;
 GO
+
+
+        
+
+
+
+
+
+
 
 
 
@@ -216,7 +232,7 @@ GO
         
         
         
---  EXEC  UpdateAllTableStatistics @dbname = 'CloudADM';
+--  exec [UpdateAllTableStatistics] @dbname=  'SISGTR'
 	
 	
 	
