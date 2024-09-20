@@ -47,7 +47,8 @@ BEGIN
       AND UPPER(Name) NOT LIKE '%SKY%'
       AND UPPER(Name) NOT LIKE '%DESENV%'  
       AND UPPER(Name) NOT LIKE '%EQUIPEF4%'
-      AND UPPER(Name) NOT LIKE '%TesteUnitario%'      
+      AND UPPER(Name) NOT LIKE '%TesteUnitario%'    
+      AND UPPER(Name) NOT LIKE '%CLOUDADM%'                  
       AND UPPER(Name) NOT LIKE '%FALTA_PAGAMENTO%'      
       AND DATABASE_ID > 4;
 
@@ -129,6 +130,7 @@ GO
 
 
 -- PRINTS 
+       USE CLOUDADM;
 	   PRINT 'show the database TB_AuxTable_Statis'
 	   SELECT * FROM TB_AuxTable_Statis ORDER BY AssignedDay; 
 	   DECLARE @CurrentDay INT;
@@ -140,6 +142,9 @@ GO
 	    PRINT 'database of current day'
 	    SELECT * FROM TB_AuxTable_Statis WHERE AssignedDay = @CurrentDay ORDER BY AssignedDay; 
 	    GO
+
+
+
 
 
 	

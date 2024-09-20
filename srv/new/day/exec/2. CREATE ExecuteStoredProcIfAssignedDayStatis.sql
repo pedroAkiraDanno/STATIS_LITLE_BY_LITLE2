@@ -71,6 +71,10 @@ BEGIN
 
     PRINT 'AssignedDay updated for each database.';
     
+
+
+
+
     -- Display contents of TB_AuxTableStatis
     SELECT * FROM TB_AuxTableStatis ORDER BY AssignedDay;
 
@@ -83,7 +87,7 @@ BEGIN
         ); --WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF);
 
 
-        PRINT 'Cretae index with [AssignedDay] to performace.';		
+     PRINT 'Cretae index with [AssignedDay] to performace.';		
         CREATE NONCLUSTERED INDEX IDXP_AUXTABLE_ASSIGNEDDAY ON [dbo].[TB_AuxTableStatis]
         (
             [AssignedDay] ASC
