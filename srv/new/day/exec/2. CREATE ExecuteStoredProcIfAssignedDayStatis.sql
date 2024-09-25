@@ -56,11 +56,12 @@ BEGIN
       AND UPPER(Name) NOT LIKE '%VIXENPOSSUPORTE%' 	
       AND UPPER(Name) NOT LIKE '%VolpeEventoOtica%'    
       AND UPPER(Name) NOT LIKE '%FALTA_PAGAMENTO%'   
+      AND UPPER(Name) NOT LIKE '%_APAGAR%'    	    
       -- about cloud07 dbs with very large size
       AND UPPER(Name) NOT LIKE '%VolpeEventoOtica%'      
       AND UPPER(Name) NOT LIKE '%VixenSkyNet%'      
       AND UPPER(Name) NOT LIKE '%VolpeToninhoHomologacao%'      
-      --AND UPPER(Name) NOT LIKE '%VolpeOticaECia%'      
+      --AND UPPER(Name) NOT LIKE '%VolpeOticaECia%'         
       AND UPPER(Name) NOT LIKE '%VolpeEmbaVidroHomolog%'      	    
       --AND UPPER(Name) NOT LIKE '%VolpeOticaCrislen%'      
       AND UPPER(Name) NOT LIKE '%VolpeLabDemo%' 
