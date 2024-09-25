@@ -53,7 +53,8 @@ BEGIN
       AND UPPER(Name) NOT LIKE '%EQUIPEF4%'
       AND UPPER(Name) NOT LIKE '%TesteUnitario%'    
       AND UPPER(Name) NOT LIKE '%CLOUDADM%'    
-      AND UPPER(Name) NOT LIKE '%VIXENPOSSUPORTE%' 	    
+      AND UPPER(Name) NOT LIKE '%VIXENPOSSUPORTE%' 	
+      AND UPPER(Name) NOT LIKE '%VolpeEventoOtica%'    
       AND UPPER(Name) NOT LIKE '%FALTA_PAGAMENTO%'   
       AND DATABASE_ID > 4;
 
