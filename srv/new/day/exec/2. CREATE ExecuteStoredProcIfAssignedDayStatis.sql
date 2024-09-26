@@ -58,20 +58,22 @@ BEGIN
       AND UPPER(Name) NOT LIKE '%FALTA_PAGAMENTO%'   
       AND UPPER(Name) NOT LIKE '%_APAGAR%'    	    
       -- about cloud07 dbs with very large size
-      AND UPPER(Name) NOT LIKE '%VolpeEventoOtica%'     
+      AND UPPER(Name) NOT LIKE '%VOLPEEVENTOOTICA%'     
       AND UPPER(Name) NOT LIKE '%VIXENPOS%'   
       AND UPPER(Name) NOT LIKE '%VIXENWEB%'       
-      AND UPPER(Name) NOT LIKE '%VixenSkyNet%'      
-      AND UPPER(Name) NOT LIKE '%VolpeToninhoHomologacao%'      
-      AND UPPER(Name) NOT LIKE '%VolpeEmbaVidroHomolog%'   
-      AND UPPER(Name) NOT LIKE '%VolpeLabDemo%' 
-      AND UPPER(Name) NOT LIKE '%LabDemo%' 	            
-      AND UPPER(Name) NOT LIKE '%VolpeMediaMonks_Homolog%'    
-      --AND UPPER(Name) NOT LIKE '%VolpeOticaCrislen%'      	    
-      --AND UPPER(Name) NOT LIKE '%VolpeFeira%'  	    
-      --AND UPPER(Name) NOT LIKE '%OticaCorpWizard%'    	    
-      --AND UPPER(Name) NOT LIKE '%VolpeOticaECia%'   	    
+      AND UPPER(Name) NOT LIKE '%VIXENSKYNET%'      
+      AND UPPER(Name) NOT LIKE '%VOLPETONINHOHOMOLOGACAO%'      
+      AND UPPER(Name) NOT LIKE '%VOLPEEMBAVIDROHOMOLOG%'   
+      AND UPPER(Name) NOT LIKE '%VOLPELABDEMO%' 
+      AND UPPER(Name) NOT LIKE '%LABDEMO%' 	            
+      AND UPPER(Name) NOT LIKE '%VOLPEMEDIAMONKS_HOMOLOG%'    
+      --AND UPPER(Name) NOT LIKE '%VOLPEOTICACRISLEN%'      	    
+      --AND UPPER(Name) NOT LIKE '%VOLPEFEIRA%'  	    
+      --AND UPPER(Name) NOT LIKE '%OTICACORPWIZARD%'    	    
+      --AND UPPER(Name) NOT LIKE '%VOLPEOTICAECIA%'   	    
       AND DATABASE_ID > 4;
+
+
 
     PRINT 'Databases inserted into TB_AuxTableStatis.';
 
