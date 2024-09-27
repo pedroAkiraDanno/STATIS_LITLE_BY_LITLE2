@@ -58,7 +58,7 @@
 
 
 	---- EXECUTE REBUILD and REOGANIZE. 
- --	EXEC ExecuteStoredProcIfAssignedDayStatis;
+ 	EXEC ExecuteStoredProcIfAssignedDayStatis;
 
 
 
