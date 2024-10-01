@@ -190,15 +190,15 @@ BEGIN
 
     -- Declare variables for dynamic SQL
     DECLARE @SQL NVARCHAR(MAX);
-    --DECLARE @tablename NVARCHAR(128);
-    --DECLARE @Statement NVARCHAR(300);
+    --DECLARE @tablename NVARCHAR(300);
+    --DECLARE @Statement NVARCHAR(MAX);
 
     -- Build dynamic SQL to switch database context
     SET @SQL = N'
     -- Declare variables for dynamic SQL
     DECLARE @SQL NVARCHAR(MAX);
-    DECLARE @tablename NVARCHAR(128);
-    DECLARE @Statement NVARCHAR(300);
+    DECLARE @tablename NVARCHAR(300);
+    DECLARE @Statement NVARCHAR(MAX);
 
     USE ' + QUOTENAME(@dbname) + ';
     
