@@ -44,6 +44,13 @@ GO
 
 
 
+USE [CloudADM]
+GO
+/****** Object:  StoredProcedure [dbo].[UpdateAllTableStatistics]    Script Date: 9/9/2024 12:13:06 PM ******/
+DROP PROCEDURE [dbo].[UpdateAuxTableStatis]
+GO
+  
+
 
 USE [CloudADM]
 GO
