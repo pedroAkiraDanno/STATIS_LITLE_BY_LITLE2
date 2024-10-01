@@ -11,8 +11,8 @@
 
     DECLARE @CurrentDay INT;
 
-	PRINT 'show the database TB_AuxTable_Statis'
-	SELECT * FROM TB_AuxTable_Statis ORDER BY AssignedDay; 
+	PRINT 'show the database TB_AuxTableStatis'
+	SELECT * FROM TB_AuxTableStatis ORDER BY AssignedDay; 
 
     -- Get the current day of the month
     SET @CurrentDay = DAY(GETDATE());

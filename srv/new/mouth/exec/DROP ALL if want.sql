@@ -54,9 +54,9 @@ GO
 
 USE [CloudADM]
 GO
-/****** Object:  Table [dbo].[TB_AuxTable_Statis]    Script Date: 9/9/2024 12:13:55 PM ******/
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[TB_AuxTable_Statis]') AND type in (N'U'))
-DROP TABLE [dbo].[TB_AuxTable_Statis]
+/****** Object:  Table [dbo].[TB_AuxTableStatis]    Script Date: 9/9/2024 12:13:55 PM ******/
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[TB_AuxTableStatis]') AND type in (N'U'))
+DROP TABLE [dbo].[TB_AuxTableStatis]
 GO
 
 
