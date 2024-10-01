@@ -57,6 +57,7 @@
 
 	USE CloudAdm; 
 	GO 
+		
 	---- EXECUTE REBUILD and REOGANIZE. 
  	EXEC ExecuteStoredProcIfAssignedDayStatis;
 
