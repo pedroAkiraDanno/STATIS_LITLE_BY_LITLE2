@@ -36,7 +36,11 @@
 	  GO
 		  
 	   
-		   
+
+
+           --- 		  
+           USE CloudAdm; 
+	   GO 		  
 	   DECLARE @CurrentDay INT;
 	    -- Get the current day of the month
 	    SET @CurrentDay =DATEPART(WEEKDAY, GETDATE());		
@@ -46,17 +50,13 @@
 
 
 
-
-
-
-
-
 	
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -- EXECUTE 
 
-
+	USE CloudAdm; 
+	GO 
 	---- EXECUTE REBUILD and REOGANIZE. 
  	EXEC ExecuteStoredProcIfAssignedDayStatis;
 
