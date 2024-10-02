@@ -41,7 +41,7 @@
 	   
 
 
-           --- 		  
+           --- principal	  
            USE CloudAdm; 
 	   GO 		  
 	   DECLARE @CurrentDay INT;
