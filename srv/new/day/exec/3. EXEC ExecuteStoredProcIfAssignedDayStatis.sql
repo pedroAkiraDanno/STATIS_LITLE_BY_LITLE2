@@ -4,21 +4,24 @@
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -- SELECT 
 
-	USE CloudAdm; 
-	GO 
+	 USE CloudAdm; 
+	 GO 
 
 
 
-    DECLARE @CurrentDay INT;
-
-	PRINT 'show the database TB_AuxTableStatis'
-	SELECT * FROM TB_AuxTableStatis ORDER BY AssignedDay; 
-
-    -- Get the current day of the month
-    SET @CurrentDay = DAY(GETDATE());
-
-    PRINT 'Current Day of the Month: ' + CAST(@CurrentDay AS VARCHAR(2));
+		
+	 USE CloudAdm; 
+	 GO   
 	
+	 PRINT 'show the database TB_AuxTableStatis'
+	 SELECT * FROM TB_AuxTableStatis ORDER BY AssignedDay; 
+	
+	 DECLARE @CurrentDay INT;
+	 -- Get the current day of the month
+	 SET @CurrentDay = DAY(GETDATE());
+	
+	 PRINT 'Current Day of the Month: ' + CAST(@CurrentDay AS VARCHAR(2));
+		
 	
 	
 	
@@ -38,7 +41,7 @@
 	   
 
 
-           --- 		  
+           --- principal	  
            USE CloudAdm; 
 	   GO 		  
 	   DECLARE @CurrentDay INT;

@@ -67,7 +67,12 @@ BEGIN
       AND UPPER(Name) NOT LIKE '%VOLPELABDEMO%' 
       AND UPPER(Name) NOT LIKE '%LABDEMO%' 	            
       AND UPPER(Name) NOT LIKE '%VOLPEMEDIAMONKS_HOMOLOG%'    
+<<<<<<< HEAD
       AND UPPER(Name) NOT LIKE '%VOLPEDEMOONLINE%'                
+=======
+      AND UPPER(Name) NOT LIKE '%VIXENOTICAWEBAPI_TESTEUNITARIO%'    -- in SBD   
+      AND UPPER(Name) NOT LIKE '%_FAZERBKP%'    -- in SBD    	    
+>>>>>>> 14d213cc4de882956a11fa67d0b8af6bc63c2564
       --AND UPPER(Name) NOT LIKE '%VOLPEOTICACRISLEN%'      	    
       --AND UPPER(Name) NOT LIKE '%VOLPEFEIRA%'  	    
       --AND UPPER(Name) NOT LIKE '%OTICACORPWIZARD%'    	    
@@ -203,7 +208,7 @@ BEGIN
     DECLARE updatestats CURSOR FOR
     SELECT table_name
     FROM information_schema.tables
-    WHERE TABLE_TYPE = ''BASE TABLE'';
+    WHERE TABLE_TYPE = ''BASE TABLE'' order BY TABLE_NAME;
 
     -- Open the cursor
     OPEN updatestats;
