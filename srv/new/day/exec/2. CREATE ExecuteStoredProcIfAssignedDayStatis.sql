@@ -183,6 +183,94 @@ GO
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+CREATE OR ALTER PROCEDURE [dbo].[UpdateAllTableStatistics]
+    @dbname VARCHAR(255)
+AS
+BEGIN
+    -- Ensure no extra messages interfere with the output
+    SET NOCOUNT ON;
+
+    -- Declare variables for dynamic SQL
+    DECLARE @SQL NVARCHAR(MAX);
+    DECLARE @tablename NVARCHAR(300);
+    DECLARE @schemaname NVARCHAR(128);
+    DECLARE @Statement NVARCHAR(MAX);
+
+    -- Build dynamic SQL to switch database context
+    SET @SQL = N'
+    -- Declare variables for dynamic SQL
+    DECLARE @SQL NVARCHAR(MAX);
+    DECLARE @tablename NVARCHAR(300);
+    DECLARE @schemaname NVARCHAR(128);
+    DECLARE @Statement NVARCHAR(MAX);
+
+    USE ' + QUOTENAME(@dbname) + ';
+    
+    -- Declare a cursor for selecting table names and schema names from the specified database
+    DECLARE updatestats CURSOR FOR
+    SELECT TABLE_SCHEMA, TABLE_NAME
+    FROM information_schema.tables
+    WHERE TABLE_TYPE = ''BASE TABLE'' ORDER BY TABLE_SCHEMA, TABLE_NAME;
+
+    -- Open the cursor
+    OPEN updatestats;
+
+    -- Fetch the first row
+    FETCH NEXT FROM updatestats INTO @schemaname, @tablename;
+
+    -- Loop through all rows in the cursor
+    WHILE (@@FETCH_STATUS = 0)
+    BEGIN
+        -- Construct the UPDATE STATISTICS command
+        PRINT N''UPDATING STATISTICS '' + QUOTENAME(@schemaname) + ''.'' + QUOTENAME(@tablename);
+        SET @Statement = ''UPDATE STATISTICS '' + QUOTENAME(@schemaname) + ''.'' + QUOTENAME(@tablename);
+        PRINT @Statement;
+
+        -- Execute the dynamic SQL command
+        EXEC sp_executesql @Statement;
+
+        -- Fetch the next row
+        FETCH NEXT FROM updatestats INTO @schemaname, @tablename;
+    END
+
+    -- Close and deallocate the cursor
+    CLOSE updatestats;
+    DEALLOCATE updatestats;
+    ';
+
+    -- Execute the dynamic SQL
+    EXEC sp_executesql @SQL;
+    
+    -- Restore NOCOUNT setting
+    SET NOCOUNT OFF;
+END;
+GO
+
+
+
+
+
+
+
+
+
+
+/* 
+
 CREATE OR ALTER PROCEDURE [dbo].[UpdateAllTableStatistics]
     @dbname VARCHAR(255)
 AS
@@ -246,6 +334,8 @@ BEGIN
 END;
 GO
 
+
+*/
 
         
 
