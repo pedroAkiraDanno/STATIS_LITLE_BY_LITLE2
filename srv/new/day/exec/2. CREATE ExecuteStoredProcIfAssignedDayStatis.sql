@@ -234,7 +234,7 @@ BEGIN
     BEGIN
         -- Construct the UPDATE STATISTICS command
         PRINT N''UPDATING STATISTICS '' + QUOTENAME(@schemaname) + ''.'' + QUOTENAME(@tablename);
-        SET @Statement = ''UPDATE STATISTICS '' + QUOTENAME(@schemaname) + ''.'' + QUOTENAME(@tablename);
+        SET @Statement = ''UPDATE STATISTICS '' + QUOTENAME(@schemaname) + ''.'' + QUOTENAME(@tablename) ;
         PRINT @Statement;
 
         -- Execute the dynamic SQL command
@@ -256,7 +256,7 @@ BEGIN
     SET NOCOUNT OFF;
 END;
 GO
-
+-- SET @Statement = ''UPDATE STATISTICS '' + QUOTENAME(@tablename) + '' WITH FULLSCAN'';
 
 	
 -- EXEC UpdateAllTableStatistics @dbname = [RDWEB];
