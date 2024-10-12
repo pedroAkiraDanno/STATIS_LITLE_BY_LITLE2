@@ -68,11 +68,8 @@ BEGIN
       AND UPPER(Name) NOT LIKE '%LABDEMO%' 	            
       AND UPPER(Name) NOT LIKE '%VOLPEMEDIAMONKS_HOMOLOG%'    
       AND UPPER(Name) NOT LIKE '%VOLPEDEMOONLINE%'                
-<<<<<<< HEAD
-=======
       AND UPPER(Name) NOT LIKE '%VIXENOTICAWEBAPI_TESTEUNITARIO%'    -- in SBD   
       AND UPPER(Name) NOT LIKE '%_FAZERBKP%'    -- in SBD    	    
->>>>>>> 9e24e297cc496f375dd04b03d21f6608192be985
       --AND UPPER(Name) NOT LIKE '%VOLPEOTICACRISLEN%'      	    
       --AND UPPER(Name) NOT LIKE '%VOLPEFEIRA%'  	    
       --AND UPPER(Name) NOT LIKE '%OTICACORPWIZARD%'    	    
