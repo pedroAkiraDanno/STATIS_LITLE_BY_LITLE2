@@ -1,0 +1,42 @@
+
+cloud07
+
+Processing Database: VOLPEDEMOONLINE, AssignedDay: 3
+Current day matches AssignedDay for VOLPEDEMOONLINE. Executing stored procedure.
+EXEC DisableTriggerInDatabase @DatabaseName = [VOLPEDEMOONLINE];
+Disable a Trigger if it exists in database: VOLPEDEMOONLINE, : 
+Trigger [tr_logdatabase] has been disabled on database VOLPEDEMOONLINE. 
+Current day matches AssignedDay for VOLPEDEMOONLINE. Executing stored procedure.
+EXEC UpdateAllTableStatistics @dbname = [VOLPEDEMOONLINE];
+UPDATING STATISTICS VD_ORCAMENTOSCOND
+UPDATE STATISTICS [VD_ORCAMENTOSCOND]
+UPDATING STATISTICS CA_VENDACV
+UPDATE STATISTICS [CA_VENDACV]
+UPDATING STATISTICS PV_TEFMODALIDADES
+UPDATE STATISTICS [PV_TEFMODALIDADES]
+UPDATING STATISTICS CA_CANCELAMENTOMOTIVO
+UPDATE STATISTICS [CA_CANCELAMENTOMOTIVO]
+UPDATING STATISTICS CM_PUBLICACAO
+UPDATE STATISTICS [CM_PUBLICACAO]
+UPDATING STATISTICS ql_origemRNC
+UPDATE STATISTICS [ql_origemRNC]
+UPDATING STATISTICS ce_marcaprod
+UPDATE STATISTICS [ce_marcaprod]
+UPDATING STATISTICS ma_planopeca
+UPDATE STATISTICS [ma_planopeca]
+UPDATING STATISTICS ma_logstatusos
+UPDATE STATISTICS [ma_logstatusos]
+UPDATING STATISTICS tb_situacaonf
+UPDATE STATISTICS [tb_situacaonf]
+UPDATING STATISTICS cp_cotacao
+UPDATE STATISTICS [cp_cotacao]
+UPDATING STATISTICS TWN_LINK
+UPDATE STATISTICS [TWN_LINK]
+UPDATING STATISTICS rs_statusvaga
+UPDATE STATISTICS [rs_statusvaga]
+UPDATING STATISTICS pv_integracontaconsumo
+UPDATE STATISTICS [pv_integracontaconsumo]
+Msg 2706, Level 16, State 6, Line 6
+Table 'pv_integracontaconsumo' does not exist.
+
+Completion time: 2024-10-01T01:42:59.0217760-03:00

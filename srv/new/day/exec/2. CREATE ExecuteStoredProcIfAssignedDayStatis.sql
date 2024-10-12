@@ -67,6 +67,7 @@ BEGIN
       AND UPPER(Name) NOT LIKE '%VOLPELABDEMO%' 
       AND UPPER(Name) NOT LIKE '%LABDEMO%' 	            
       AND UPPER(Name) NOT LIKE '%VOLPEMEDIAMONKS_HOMOLOG%'    
+      AND UPPER(Name) NOT LIKE '%VOLPEDEMOONLINE%'                
       --AND UPPER(Name) NOT LIKE '%VOLPEOTICACRISLEN%'      	    
       --AND UPPER(Name) NOT LIKE '%VOLPEFEIRA%'  	    
       --AND UPPER(Name) NOT LIKE '%OTICACORPWIZARD%'    	    
