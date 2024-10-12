@@ -1,0 +1,124 @@
+Message
+Executed as user: NT AUTHORITY\SYSTEM. Current Day of the Week: 6 [SQLSTATE 01000] (Message 0)  TB_AuxTableStatis dropped. 
+[SQLSTATE 01000] (Message 0)  TB_AuxTableStatis created. [SQLSTATE 01000] (Message 0)  Databases inserted into TB_AuxTableStatis.
+[SQLSTATE 01000] (Message 0)  AssignedDay updated for each database. [SQLSTATE 01000] (Message 0)  Cretae index with [DatabaseName] TO
+performace. [SQLSTATE 01000] (Message 0)  Cretae index with [AssignedDay] to performace. [SQLSTATE 01000] (Message 0) 
+Processing Database: ECOMMERCEPARQUEN1, AssignedDay: 1 [SQLSTATE 01000] (Message 0)  Current day does not match AssignedDay 
+for ECOMMERCEPARQUEN1. Skipping stored procedure execution. [SQLSTATE 01000] (Message 0)  Processing Database: LMOPTICA,
+AssignedDay: 2 [SQLSTATE 01000] (Message 0)  Current day does not match AssignedDay for LMOPTICA. Skipping stored procedure execution. 
+[SQLSTATE 01000] (Message 0)  Processing Database: MIGRATIONSSCRIPTSTESTES, AssignedDay: 3 [SQLSTATE 01000] (Message 0) 
+Current day does not match AssignedDay for MIGRATIONSSCRIPTSTESTES. Skipping stored procedure execution. [SQLSTATE 01000] (Message 0)  Processing Database: 
+OPTICAESPECIALISTA, AssignedDay: 4 [SQLSTATE 01000] (Message 0)  Current day does not match AssignedDay for OPTICAESPECIALISTA. Skipping stored procedure 
+execution. [SQLSTATE 01000] (Message 0)  Processing Database: OTICASCRISLENLOJA02, AssignedDay: 5 [SQLSTATE 01000] (Message 0)  Current day does not match AssignedDay
+for OTICASCRISLENLOJA02. Skipping stored procedure execution. [SQLSTATE 01000] (Message 0)  Processing Database: RDWEB, AssignedDay: 6 [SQLSTATE 01000] (Message 0) 
+Current day matches AssignedDay for RDWEB. Executing stored procedure. [SQLSTATE 01000] (Message 0)  EXEC DisableTriggerInDatabase @DatabaseName = [RDWEB]; [SQLSTATE 01000]
+(Message 0)  Disable a Trigger if it exists in database: RDWEB, : [SQLSTATE 01000] (Message 0)  Trigger [tr_logdatabase] does not exist on database RDWEB. [SQLSTATE 01000] 
+(Message 0)  Current day matches AssignedDay for RDWEB. Executing stored procedure. [SQLSTATE 01000] (Message 0)  EXEC UpdateAllTableStatistics @dbname = [RDWEB]; [SQLSTATE 01000] 
+(Message 0)  Table 'RoleRdsh' does not exist. [SQLSTATE 42S02] (Error 2706)  UPDATING STATISTICS RoleRdsh [SQLSTATE 01000] (Error 0)  UPDATE STATISTICS [RoleRdsh] [SQLSTATE 01000]
+(Error 0).  The step failed.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+i discovery the error 
+because the function UpdateAllTableStatistics. dont use schema.table just table. so if the database use differente schema then dbo. this will cause the error table dont exist. because the table dbo.table is differente then schema.table. termas.table example.
+
+error_because_not_dbo_but_different_schema
+
+
+
+
+
+ORIGENAL : 
+
+
+
+
+CREATE OR ALTER PROCEDURE [dbo].[UpdateAllTableStatistics]
+    @dbname VARCHAR(255)
+AS
+BEGIN
+    -- Ensure no extra messages interfere with the output
+    SET NOCOUNT ON;
+
+    -- Declare variables for dynamic SQL
+    DECLARE @SQL NVARCHAR(MAX);
+    --DECLARE @tablename NVARCHAR(128);
+    --DECLARE @Statement NVARCHAR(300);
+
+    -- Build dynamic SQL to switch database context
+    SET @SQL = N'
+    -- Declare variables for dynamic SQL
+    DECLARE @SQL NVARCHAR(MAX);
+    DECLARE @tablename NVARCHAR(300);
+    DECLARE @Statement NVARCHAR(MAX);
+
+    USE ' + QUOTENAME(@dbname) + ';
+    
+    -- Declare a cursor for selecting table names from the specified database
+    DECLARE updatestats CURSOR FOR
+    SELECT table_name
+    FROM information_schema.tables
+    WHERE TABLE_TYPE = ''BASE TABLE'' order BY TABLE_NAME;
+
+    -- Open the cursor
+    OPEN updatestats;
+
+    -- Fetch the first row
+    FETCH NEXT FROM updatestats INTO @tablename;
+
+    -- Loop through all rows in the cursor
+    WHILE (@@FETCH_STATUS = 0)
+    BEGIN
+        -- Construct the UPDATE STATISTICS command
+        PRINT N''UPDATING STATISTICS '' + @tablename;
+        -- SET @Statement = ''UPDATE STATISTICS '' + QUOTENAME(@tablename) + '' WITH FULLSCAN'';
+        SET @Statement = ''UPDATE STATISTICS '' + QUOTENAME(@tablename);        
+        PRINT @Statement;
+
+        -- Execute the dynamic SQL command
+        EXEC sp_executesql @Statement;
+
+        -- Fetch the next row
+        FETCH NEXT FROM updatestats INTO @tablename;
+    END
+
+    -- Close and deallocate the cursor
+    CLOSE updatestats;
+    DEALLOCATE updatestats;
+    ';
+
+	--print @SQL;
+    -- Execute the dynamic SQL
+    EXEC sp_executesql @SQL;
+    
+    -- Restore NOCOUNT setting
+    SET NOCOUNT OFF;
+END;
+GO
+
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
