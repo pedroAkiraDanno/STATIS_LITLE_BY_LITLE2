@@ -204,7 +204,7 @@ BEGIN
     DECLARE updatestats CURSOR FOR
     SELECT table_name
     FROM information_schema.tables
-    WHERE TABLE_TYPE = ''BASE TABLE'';
+    WHERE TABLE_TYPE = ''BASE TABLE'' order BY TABLE_NAME;
 
     -- Open the cursor
     OPEN updatestats;
