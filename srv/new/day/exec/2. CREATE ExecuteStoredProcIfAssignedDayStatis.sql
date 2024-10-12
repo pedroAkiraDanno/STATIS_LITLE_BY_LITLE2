@@ -261,7 +261,8 @@ END;
 GO
 
 
-
+	
+-- EXEC UpdateAllTableStatistics @dbname = [RDWEB];
 
 
 
