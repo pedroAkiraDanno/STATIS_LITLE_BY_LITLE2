@@ -235,6 +235,7 @@ BEGIN
         -- Construct the UPDATE STATISTICS command
         PRINT N''UPDATING STATISTICS '' + QUOTENAME(@schemaname) + ''.'' + QUOTENAME(@tablename);
         SET @Statement = ''UPDATE STATISTICS '' + QUOTENAME(@schemaname) + ''.'' + QUOTENAME(@tablename) ;
+	-- SET @Statement = ''UPDATE STATISTICS '' + QUOTENAME(@schemaname) + ''.'' + QUOTENAME(@tablename) + '' WITH FULLSCAN'' ;	    
         PRINT @Statement;
 
         -- Execute the dynamic SQL command
